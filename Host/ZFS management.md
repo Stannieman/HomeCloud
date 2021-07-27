@@ -61,9 +61,11 @@ Now the drive can be unplugged to store it in a safe location.
 First attach the backup drive to the computer.
 
 Then bring the drive offline:\
-`sudo zpool online /dev/sdb`
+`sudo zpool online storage /dev/sdb`
 
 Now the backup drive should resilver.
+Resilvering happens in the background so we need to manually check\
+when it's done using `sudo zpool status`.
 
 After the resilvering finished the pool should be scrubbed:\
 `sudo zpool scrub storage`
