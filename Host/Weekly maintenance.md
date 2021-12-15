@@ -13,6 +13,10 @@ Stop all components:\
 Update all packages:\
 `sudo apt update && sudo apt upgrade -y`
 
+If the kernel is updated then also *zfs-dkms* needs to be reinstalled.\
+This will recompile the kernel module for the new kernel.\
+`sudo apt reinstall zfs-dkms -y`
+
 Reboot the computer:\
 `reboot`
 
