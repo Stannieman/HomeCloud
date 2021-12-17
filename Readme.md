@@ -9,21 +9,36 @@ Apart from managing the storage all other functions of the cloud are handled by 
 Check out [Components.md](<./Components.md>) for instructions about adding and maintaining components.
 
 ## Storage
-*ZFS* is used for the main data storage. The *ZFS* pool is always available and the main volume is mounted to */storage* on the host. This mountpoint is then made available to all *Docker* containers that need it through a mounted volume.
+The storage is always available and mounted to */storage* on the host. This mountpoint is then made available to all *Docker* containers that need it through a mounted volume.
 
-The reasons for using *ZFS* are:
+### File system
+*ZFS* is used as the file system for the main data storage.\
+Why?
 * Data can never silently become corrupted.\
 Whenever an attempt is made to read data that has become corrupted it will call you to tell you about it.
 * Making backups is easy.\
 We use a trick with a mirrored pool here where one drive will be offline most of the time, but there are other ways too.
 * The backup drive can be brought offline and can thus be stored in a different physical location.\
 This protects it from fires, burglaries and tsunamies.
-* *ZFS* natively supports encryption.\
-When a drive gets stolen nobody can access the data.
 
-Our *ZFS* pool has compression enabled and there is a subvolume that's encrypted. The pool has 2 drives that are mirrored. The backup drive will be offline most of the time. Whenever it's brought online it resilvers and thus all changes from the main drive are synced to it.
+The *ZFS* pool has copression is enabled to save space.\
+It 2 drives that are mirrored in order to have a backup. The backup drive will be offline most of the time but when it's brought online it resilvers so that all changes from the main drive are synced to it.
 
 The host OS is responsible for making snapshots and backups and the overall health of the storage pool.
+
+### Encryption
+When someone "takes a look" at our drives we of course don't want them to see what's on there.\
+To prevent just that we use *LUKS* to encrypt the partitions on the drives that are used for our storage.
+
+Why *LUKS*?
+* It is faster than *ZFS* encryption.\
+While *ZFS* supports encryption natively it does not use the crypto extensions present in our CPU. This causes the encryption to be so slow that the CPU becomes a bottleneck.\
+*LUKS* does make use of these crypto extensions.
+* It is more secore than *ZFS* encryption.\
+*ZFS* encrypts the data blocks but bot the metadata.\
+With *LUKS* the entire partition is encrypted.
+
+Instead we use *LUKS* to encrypt
 
 ## Maintenance
 Twice a week a *ZFS* snapshot will be made automatically.\
@@ -32,4 +47,4 @@ Detailed instructions for this can be find in [Host/Weekly maintenance.md](<Host
 
 ## Setup
 Instructions for setting up the host OS can be found in [Host/Host OS setup.md](<Host/Host OS setup.md>).\
-Instructions for managing the *ZFS* pool are in [Host/ZFS management.md](<Host/ZFS management.md>).
+Instructions for managing the *ZFS* pool are in [Host/ZFS management.md](<Host/Storage management.md>).

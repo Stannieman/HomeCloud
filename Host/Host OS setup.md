@@ -8,7 +8,7 @@ Extract the *.img* image.
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
-Connect a display is not needed.\
+Connecting a display is not needed.\
 We can SSH into it using the root account and then run the setup script manualy.
 
 Login as *root* with password *1234*.
@@ -34,7 +34,7 @@ Update all existing packages:\
 `sudo apt update && sudo apt upgrade -y`
 
 Add packages:\
-`sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux docker.io docker-compose`µ
+`sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim`
 This will take a long time because it has to compile the *ZFS* kernel module from source.
 
 Remove stale packages:\
@@ -43,13 +43,9 @@ Remove stale packages:\
 Remove unused scheduled tasks:\
 `sudo rm /etc/cron.hourly/fake-hwclock` (Saving time to disk.)\
 `sudo rm /etc/cron.daily/apt-compat` (Automatic package updates.)\
-`sudo rm /etc/cron.daily/aptitude` (Save an overview of package states.)\
-`sudo rm /etc/cron.daily/bsdmainutils` (Calendar maintenance script.)\
 `sudo rm /etc/cron.daily/dpkg` (Backup dpkg database.)\
-`sudo rm /etc/cron.daily/man-db` (Rebuilds man-db database.)\
 `sudo rm /etc/cron.daily/sysstat` (Generates process statistics.)\
 `sudo rm /etc/cron.daily/cracklib-runtime` (Maintains a database for password security checking.)\
-`sudo rm /etc/cron.weekly/man-db` (Rebuilds man-db database.)\
 `sudo rm /etc/cron.d/zfsutils-linux` (Trims and scrubs ZFS, we do this ourself.)\
 `sudo rm /etc/cron.d/sysstat` (Logs system statistics.)\
 `sudo rm /etc/cron.d/armbian-updates` (Automatic package updates.)
@@ -61,8 +57,8 @@ Use
 * `0  6    * * 0` for the weekly job.
 * `0  5    1 * *` for the monthly job.
 
-Change the hostname:\
-`echo 'server' | sudo tee /etc/hostname`
+Change the hostname and add it to the hosts file:\
+`echo 'server' | sudo tee /etc/hostname && echo '127.0.0.1 server' | sudo tee -a /etc/hosts`
 
 ## Check out this repository
 `git clone https://www.github.com/Stannieman/HomeCloud`
@@ -80,7 +76,7 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 
 ## Configuring the storage drives
 To make all storage drives go to sleep after a period of inactivity,\
-add a task for each drive that set the drive's power management properties at startup.\
+add a task for each drive that sets the drive's power management properties at startup.\
 Add this line to the */etc/crontab* file for each drive:\
 `@reboot root hdparm -S 120 -B 254 /dev/sda`\
 120 means we let the drive spin down when it's been idle for 10 minutes,\
