@@ -1,6 +1,6 @@
-FROM alpine:3.14.0
+FROM alpine:3.15.0
 
-RUN apk add samba=4.14.5-r0 --update-cache;\
+RUN apk add samba=4.15.2-r0 --update-cache;\
 # This assumes the mainuser on the host has user and group id 1000.
 # By using the same id we ensure the SMB user can access the data.
 adduser mainuser -D -u 1000
