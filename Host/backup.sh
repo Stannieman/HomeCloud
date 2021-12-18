@@ -5,7 +5,7 @@ scriptPath=`dirname $(realpath $0)`
 . $scriptPath/helpers.sh
 
 WaitForZfsResilver() {
-	local status=$(zpool status storage)
+	local status="$(zpool status storage)"
 	while [ $(echo "$status" | grep -c "scrub: resilver in progress for ") != 0 ]
 	do
 		echo Waiting for resilver to finish…
@@ -15,7 +15,7 @@ WaitForZfsResilver() {
 }
 
 CheckZfsResilverResult() {
-	local status=$(zpool status storage)
+	local status="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: resilvered .* in .* with 0 errors on ") == 0 ]
 	then
 		ERROR=1
@@ -23,7 +23,7 @@ CheckZfsResilverResult() {
 }
 
 WaitForZfsScrub() {
-	local status=$(zpool status storage)
+	local status="$(zpool status storage)"
 	while [ $(echo "$status" | grep -c "scan: scrub in progress since ") != 0 ]
 	do
 		echo Waiting for scrub to finish…
@@ -33,7 +33,7 @@ WaitForZfsScrub() {
 }
 
 CheckZfsScrubResult() {
-	local STATUS=$(zpool status storage)
+	local STATUS="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: scrub repaird 0B in .* with 0 errors on ") == 0 ]
 	then
 		ERROR=1
