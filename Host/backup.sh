@@ -49,7 +49,7 @@ fi
 echo ZFS snapshots are OK!
 
 echo Opening encrypted backup drive…
-cryptsetup --type2 open /dev/sdb encryptedsdb
+cryptsetup --type luks2 open /dev/sdb encryptedsdb
 
 echo Attaching backup drive to ZFS pool…
 zpool online storage encryptedsdb

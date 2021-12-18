@@ -8,10 +8,10 @@ GetExpectedSnapshotPattern() {
 }
 
 CheckZfsSnapshots() {
-	local SNAPSHOT_LIST=$(zfs list -r -t snapshot -o name,creation storage)
-	if [ $(echo "$SNAPSHOT_LIST" | grep -c "storage@") != 2 ] \
-		|| [ $(echo "$SNAPSHOT_LIST" | grep -c "$(get_expected_snapshot_date wednesday)") != 1 ] \
-		|| [ $(echo "$SNAPSHOT_LIST" | grep -c "$(get_expected_snapshot_date sunday)") != 1 ]
+	local snapshotList="$(zfs list -r -t snapshot -o name,creation storage)"
+	if [ $(echo "$snapshotList" | grep -c "storage@") != 2 ] \
+		|| [ $(echo "$snapshotList" | grep -c "$(get_expected_snapshot_date wednesday)") != 1 ] \
+		|| [ $(echo "$snapshotList" | grep -c "$(get_expected_snapshot_date sunday)") != 1 ]
 	then
 		ERROR=1
 	fi
