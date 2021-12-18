@@ -20,7 +20,7 @@ Place the *docker-compose.yml* file in it:\
 `sudo cp HomeCloud/Component/docker-compose.yml /docker/Component`
 
 Change any environment variables like passwords in this file if needed:
-`sudo vi /docker/Component/docker-compose.yml`
+`sudo vim /docker/Component/docker-compose.yml`
 
 Next stop all running containers:\
 `sudo docker stop $(sudo docker ps -q)`
