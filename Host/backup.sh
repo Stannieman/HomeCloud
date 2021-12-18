@@ -16,7 +16,7 @@ WaitForZfsResilver() {
 
 CheckZfsResilverResult() {
 	local status="$(zpool status storage)"
-	if [ $(echo "$status" | grep -c "scan: resilvered .* in .* with 0 errors on ") == 0 ]
+	if [ $(echo "$status" | grep -c "scan: resilvered .* in .* with 0 errors on ") = 0 ]
 	then
 		ERROR=1
 	fi
@@ -33,7 +33,7 @@ WaitForZfsScrub() {
 }
 
 CheckZfsScrubResult() {
-	local STATUS="$(zpool status storage)"
+	local status="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: scrub repaird 0B in .* with 0 errors on ") == 0 ]
 	then
 		ERROR=1
