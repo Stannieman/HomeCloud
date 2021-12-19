@@ -5,10 +5,11 @@ scriptPath=`dirname $(realpath $0)`
 . $scriptPath/helpers.sh
 
 WaitForZfsResilver() {
+	echo "\n\nWAITING FOR RESILVER TO FINISH…"
 	local status="$(zpool status storage)"
 	while [ $(echo "$status" | grep -c "scrub: resilver in progress for ") != 0 ]
 	do
-		echo Waiting for resilver to finish…
+		echo "WAITING FOR RESILVER TO FINISH…"
 		sleep 10
 		$status=$(zpool status storage)
 	done
@@ -23,10 +24,11 @@ CheckZfsResilverResult() {
 }
 
 WaitForZfsScrub() {
+	echo "\n\nWAITING FOR SCRUB TO FINISH…"
 	local status="$(zpool status storage)"
 	while [ $(echo "$status" | grep -c "scan: scrub in progress since ") != 0 ]
 	do
-		echo Waiting for scrub to finish…
+		echo "WAITING FOR SCRUB TO FINISH…"
 		sleep 10
 		$status=$(zpool status storage)
 	done
@@ -43,25 +45,25 @@ CheckZfsScrubResult() {
 CheckZfsSnapshots
 if [ $Error ]
 then
-	echo -e "\n\nERROR: ZFS SNAPSHOTS ARE NOT OK!"
+	echo "\n\nERROR: ZFS SNAPSHOTS ARE NOT OK!"
 	exit
 fi
-echo -e "\n\nZFS SNAPSHOTS ARE OK!"
+echo "\n\nZFS SNAPSHOTS ARE OK!"
 
-echo -e "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
+echo "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
 cryptsetup --type luks2 open /dev/sdb encryptedsdb
 
-echo -e "\n\nATTACHING BACKUP DRIVE TO ZFS POOL…"
+echo "\n\nATTACHING BACKUP DRIVE TO ZFS POOL…"
 zpool online storage encryptedsdb
 
 WaitForZfsResilver
 CheckZfsResilverResult
 if [ $Error ]
 then
-	echo -e "\n\nERROR: ZFS RESILVER DID NOT COMPLETE WITHOUT ERRORS!"
+	echo "\n\nERROR: ZFS RESILVER DID NOT COMPLETE WITHOUT ERRORS!"
 	exit
 fi
-echo -e "\n\nZFS RESILVER WAS OK!"
+echo "\n\nZFS RESILVER WAS OK!"
 
 if [ "$1" != "-ns" ]
 then
@@ -70,16 +72,16 @@ then
 	CheckZfsScrubResult
 	if [ $Error ]
 	then
-		echo -e "\n\nERROR: ZFS SCRUB DID NOT COMPLETE WITHOUT ERRORS!"
+		echo "\n\nERROR: ZFS SCRUB DID NOT COMPLETE WITHOUT ERRORS!"
 		exit
 	fi
-	echo -e "\n\nZFS SCRUB WAS OK!"
+	echo "\n\nZFS SCRUB WAS OK!"
 fi
 
-echo -e "\n\nDETACHING BACKUP DRIVE FROM ZFS POOL…"
+echo "\n\nDETACHING BACKUP DRIVE FROM ZFS POOL…"
 zpool offline storage encryptedsdb
 
-echo -e "\n\nCLOSING ENCRYPTED BACKUP DRIVE…"
+echo "\n\nCLOSING ENCRYPTED BACKUP DRIVE…"
 cryptsetup close encryptedsdb
 
-echo -e "\n\nBACKUP SUCCESSFULLY COMPLETED!"
+echo "\n\nBACKUP SUCCESSFULLY COMPLETED!"

@@ -1,14 +1,20 @@
 #! /bin/sh
 set -e
 
-echo -e "Stopping Docker containers…"
-docker stop $(sudo docker ps -q)
+echo "STOPPING DOCKER CONTAINERS IF NEEDED…"
+runningContainers=$(docker ps -q)
+if [ "$runningContainers" != "" ]
+then
+	docker stop $runningContainers
+fi
 
-echo -e "\n\nUPDATING PACKAGE LIST…"
+echo "\n\nUPDATING PACKAGE LIST…"
 apt update
 
-echo -e "\n\nUPDATING PACKAGES…"
+echo "\n\nUPDATING PACKAGES…"
 apt upgrade -y
 
-REINSTALLING ZFS KERNEL MODULE…"
+echo "\n\nREINSTALLING ZFS KERNEL MODULE…"
 apt reinstall zfs-dkms -y
+
+echo "\n\nUPDATE COMPLETED, PLEASE REBOOT!"
