@@ -11,11 +11,13 @@ WaitForZfsResilver() {
 	do
 		echo "WAITING FOR RESILVER TO FINISH…"
 		sleep 10
-		$status=$(zpool status storage)
+		status="$(zpool status storage)"
 	done
 }
 
 CheckZfsResilverResult() {
+	#Wait because zpool status does not show correct status immediately after resilver is done.
+	sleep 5
 	local status="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: resilvered .* in .* with 0 errors on ") = 0 ]
 	then
@@ -30,11 +32,13 @@ WaitForZfsScrub() {
 	do
 		echo "WAITING FOR SCRUB TO FINISH…"
 		sleep 10
-		$status=$(zpool status storage)
+		status="$(zpool status storage)"
 	done
 }
 
 CheckZfsScrubResult() {
+	#Wait because zpool status does not show correct status immediately after scrub is done.
+	sleep 5
 	local status="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: scrub repaird 0B in .* with 0 errors on ") == 0 ]
 	then
