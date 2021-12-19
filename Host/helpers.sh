@@ -13,6 +13,6 @@ CheckZfsSnapshots() {
 		|| [ $(echo "$snapshotList" | grep -c "$(GetExpectedSnapshotPattern wednesday)") != 1 ] \
 		|| [ $(echo "$snapshotList" | grep -c "$(GetExpectedSnapshotPattern sunday)") != 1 ]
 	then
-		ERROR=1
+		Error=1
 	fi
 }

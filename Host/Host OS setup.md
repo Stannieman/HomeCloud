@@ -57,8 +57,9 @@ Use
 * `0  6    * * 0` for the weekly job.
 * `0  5    1 * *` for the monthly job.
 
-Change the hostname and add it to the hosts file:\
-`echo 'server' | sudo tee /etc/hostname && echo '127.0.0.1 server' | sudo tee -a /etc/hosts`
+Change the hostname and add it to the hosts file.\
+`echo 'server' | sudo tee /etc/hostname`\
+`echo '127.0.0.1 server' | sudo tee -a /etc/hosts`
 
 ## Check out this repository
 `git clone https://www.github.com/Stannieman/HomeCloud`
@@ -71,7 +72,8 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 ## Make the scripts executable.
 `chmod +x HomeCloud/Host/start.sh`\
 `chmod +x HomeCloud/Host/checkHealth.sh`\
-`chmod +x HomeCloud/Host/backup.sh`
+`chmod +x HomeCloud/Host/backup.sh`\
+`chmod +x HomeCloud/Host/update.sh`
 
 ## Configuring the storage drives
 To make all storage drives go to sleep after a period of inactivity,\
@@ -86,14 +88,6 @@ Add this line to the */etc/crontab* file for each drive:\
 Add 2 lines to the */etc/crontab* file to automatically make a snapshot every Wednesday and Sunday morning.\
 `echo '0  4    * * 0 root /home/mainuser/HomeCloud/Host/createStorageSnapshot.sh' | sudo tee -a /etc/crontab`\
 `echo '0  4    * * 3 root /home/mainuser/HomeCloud/Host/createStorageSnapshot.sh' | sudo tee -a /etc/crontab`
-
-## Reboot
-The original setup script is still waiting in the console session that's on the display that we did not connect\
-and the kernel could have been updated.\
-Reboot:\
-`reboot`
-
-After that log back in again.
 
 ## Set up the storage
 Set up the storage using the instructions in [ZFS management.md](<./ZFS management.md>).\
