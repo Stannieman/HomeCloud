@@ -31,7 +31,8 @@ Remove unused packages:\
 `sudo apt remove -y fake-hwclock bsdmainutils cracklib-runtime`
 
 Update all existing packages:\
-`sudo apt update && sudo apt upgrade -y`
+`sudo apt update`\
+`sudo apt upgrade -y`
 
 Add packages:\
 `sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`
@@ -90,7 +91,7 @@ Add 2 lines to the */etc/crontab* file to automatically make a snapshot every We
 `echo '0  4    * * 3 root /home/mainuser/HomeCloud/Host/createStorageSnapshot.sh' | sudo tee -a /etc/crontab`
 
 ## Set up the storage
-Set up the storage using the instructions in [ZFS management.md](<./ZFS management.md>).\
+Set up the storage using the instructions in [Storage management.md](<./Storage management.md>).\
 If a storage pool already exists you can just import it and start using that one.
 
 ## Add the health check

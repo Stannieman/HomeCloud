@@ -23,6 +23,10 @@ Enter the password when it asks for it, it can be found in KeePass.
 Whenever we are done using an encrypted partition it has to be closed before we can disconnect it from the computer.\
 `sudo cryptsetup close encryptedsda`
 
+## Importing an existing ZFS pool
+To import an existing ZFS pool that belonged to a different computer we have to forcefully import it the first time.
+`sudo zpool import -f storage`
+
 ## Creating the ZFS pool
 ZFS keeps a history of all modifications made to the pool. We don't care about this history so we want it to take up the least possible space. The maximum space the history can occupy is fixed when the pool is initially created and is relative to the initial pool size.
 
