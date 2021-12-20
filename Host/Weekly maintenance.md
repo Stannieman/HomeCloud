@@ -7,7 +7,8 @@ First check that the automatic snapshots are still being made.\
 Then sync the backup drive using the instructions from [ZFS management.md](<./ZFS management.md>).
 
 For convenience you can use the backup script for this.\
-`sudo HomeCloud/Host/backup.sh`
+`sudo HomeCloud/Host/backup.sh`\
+Run with `-ns` to skip scrubbing the *ZFS* pool.
 
 ## Update packages and reboot
 Stop all components.\
