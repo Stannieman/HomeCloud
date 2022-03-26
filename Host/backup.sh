@@ -55,7 +55,7 @@ fi
 echo "\n\nZFS SNAPSHOTS ARE OK!"
 
 echo "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
-cryptsetup --type luks2 open /dev/sdb encryptedsdb
+cryptsetup --type luks2 --allow-discards open /dev/sdb encryptedsdb
 
 echo "\n\nATTACHING BACKUP DRIVE TO ZFS POOL…"
 zpool online storage encryptedsdb
