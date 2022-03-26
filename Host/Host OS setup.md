@@ -1,13 +1,23 @@
 # Host OS setup
 
-## Writing the OS to the MicroSD card
-Download the latest version of [Armbian](https://www.armbian.com/odroid-hc4/).
+## Building the OS image
+Open a Linux terminal, this can be done using WSL2.
 
-Extract the *.img* image.
+Clone the *Armbian build* repository:\
+`git clone --depth 1 https://github.com/armbian/build `
+
+Build the image:\
+`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=edge RELEASE=impish BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes`\
+The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.\
+The *RELEASE* parameter should be set to the desired *Ubuntu* version.
+
+After the build finishes the image will be in `./build/output/images`.
 
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
+**These instructions apply to *Ubuntu Impish* with the *edge* kernel and may need to be updated when using different versions!**
+
 Connecting a display is not needed.\
 We can SSH into it using the root account and then run the setup script manualy.
 
@@ -21,6 +31,8 @@ Choose *mainuser* as username for the "normal" user, enter it's password (see *K
 
 Do not set the language based on your location.
 
+Choose to not generate locales.
+
 You are now still logged in as root, you should log out and switch to the *mainuser* account:\
 `logout`
 
@@ -28,14 +40,14 @@ Now log in with *mainuser*.\
 You can use SSH from now on.
 
 Remove unused packages:\
-`sudo apt remove -y fake-hwclock bsdmainutils cracklib-runtime`
+`sudo apt remove -y fake-hwclock cracklib-runtime`
 
 Update all existing packages:\
 `sudo apt update`\
 `sudo apt upgrade -y`
 
 Add packages:\
-`sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`
+`sudo apt install -y hdparm zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`
 This will take a long time because it has to compile the *ZFS* kernel module from source.
 
 Remove stale packages:\
