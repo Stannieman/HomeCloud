@@ -80,11 +80,14 @@ then
 fi
 echo "\n\nZFS RESILVER WAS OK!"
 
-echo "\n\nTRIMMING DRIVES…"
-zpool trim storage
-WaitForTrim
+if [ "$1" != "-nt" ]
+then
+	echo "\n\nTRIMMING DRIVES…"
+	zpool trim storage
+	WaitForTrim
+fi
 
-if [ "$1" != "-ns" ]
+if [ "$2" != "-ns" ]
 then
 	echo "\n\nSCRUBBING ZFS POOL…"
 	zpool scrub storage
