@@ -15,7 +15,7 @@ echo "\n\nOPENING ENCRYPTED DRIVE…"
 cryptsetup --type luks2 --allow-discards open /dev/sda encryptedsda
 
 echo "\n\nIMPORTING ZFS POOL…"
-zpool import storage
+zpool import -f storage
 
 echo "\n\nSTARTING DOCKER CONTAINERS…"
 eval $dockerComposeCommand
