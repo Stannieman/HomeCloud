@@ -7,7 +7,7 @@ Clone the *Armbian build* repository:\
 `git clone --depth 1 https://github.com/armbian/build `
 
 Build the image:\
-`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=edge RELEASE=impish BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes`\
+`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=current RELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes EXTRAWIFI=no WIREGUARD=no AUFS=no`\
 The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.\
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
@@ -16,7 +16,7 @@ After the build finishes the image will be in `./build/output/images`.
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
-**These instructions apply to *Ubuntu Impish* with the *edge* kernel and may need to be updated when using different versions!**
+**These instructions apply to *Ubuntu Jammy* with the *current* kernel and may need to be updated when using different versions!**
 
 Connecting a display is not needed.\
 We can SSH into it using the root account and then run the setup script manualy.
@@ -24,8 +24,6 @@ We can SSH into it using the root account and then run the setup script manualy.
 Login as *root* with password *1234*.
 
 Enter the new *root* password (see *KeePass*).
-
-Select *Bash* as default shell.
 
 Choose *mainuser* as username for the "normal" user, enter it's password (see *KeePass*) and clear the real name.
 
@@ -36,8 +34,10 @@ Choose to not generate locales.
 You are now still logged in as root, you should log out and switch to the *mainuser* account:\
 `logout`
 
-Now log in with *mainuser*.\
-You can use SSH from now on.
+Now log in with *mainuser*.
+
+Change the timezone to UTC:\
+`sudo timedatectl set-timezone UTC`
 
 Remove unused packages:\
 `sudo apt remove -y fake-hwclock cracklib-runtime`
