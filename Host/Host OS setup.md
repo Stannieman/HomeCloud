@@ -7,8 +7,9 @@ Clone the *Armbian build* repository:\
 `git clone --depth 1 https://github.com/armbian/build `
 
 Build the image:\
-`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=current RELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes EXTRAWIFI=no WIREGUARD=no AUFS=no`\
+`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=current LIB_TAG=v22.11 RELEASE=kinetic BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no BUILD_ONLY=u-boot,kernel,armbian-firmware,armbian-bsp`\
 The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.\
+The *LIB_TAG* parameter should be set to the desired Armbian version.\
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
 After the build finishes the image will be in `./build/output/images`.
