@@ -17,7 +17,7 @@ After the build finishes the image will be in `./build/output/images`.
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
-**These instructions apply to *Ubuntu Jammy* with the *current* kernel and may need to be updated when using different versions!**
+**These instructions apply to *Ubuntu Kinetic* with the *current* kernel and may need to be updated when using different versions!**
 
 Connecting a display is not needed.  
 We can SSH into it using the root account and then run the setup script manualy.
@@ -41,7 +41,7 @@ Change the timezone to UTC:
 `sudo timedatectl set-timezone UTC`
 
 Remove unused packages:  
-`sudo apt remove -y fake-hwclock cracklib-runtime wireless-regdb wireless-tools wpasupplicant nano armbian-plymouth-theme`
+`sudo apt remove -y fake-hwclock cracklib-runtime wireless-regdb wireless-tools wpasupplicant nano armbian-plymouth-theme openvpn`
 
 Update all existing packages:  
 `sudo apt update &&`  
@@ -51,7 +51,7 @@ Reboot:
 `reboot`
 
 Add packages:  
-`sudo apt install -y hdparm zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`  
+`sudo apt install -y hdparm zfs-dkms zfsutils-linux cryptsetup vim git`  
 This will take a long time because it has to compile the *ZFS* kernel module from source.  
 It needs to happen after the reboot because the kernel could have been updated.
 
@@ -83,11 +83,6 @@ Change the hostname and add it to the hosts file.
 
 ## Check out this repository
 `git clone https://www.github.com/Stannieman/HomeCloud`
-
-## Setting up Docker
-Also create the */docker* directory and add the dummy *docker-compose.yml* file to it:  
-`sudo mkdir /docker &&`  
-`sudo cp HomeCloud/Host/docker-compose.yml /docker/`
 
 ## Make the scripts executable.
 `chmod +x HomeCloud/Host/start.sh &&`  

@@ -1,15 +1,7 @@
 #! /bin/sh
 set -e
 
-composeFiles=$(find /docker -name docker-compose.yml)
-dockerComposeCommand="docker-compose"
-
-for composeFile in $composeFiles
-do
-    dockerComposeCommand="${dockerComposeCommand} -f ${composeFile}"
-done
-
-dockerComposeCommand="${dockerComposeCommand} up -d"
+SCRIPT_PATH=`dirname $(realpath $0)`
 
 echo "\n\nOPENING ENCRYPTED DRIVE…"
 cryptsetup --type luks2 --allow-discards open /dev/sda encryptedsda
@@ -17,7 +9,12 @@ cryptsetup --type luks2 --allow-discards open /dev/sda encryptedsda
 echo "\n\nIMPORTING ZFS POOL…"
 zpool import -f storage
 
-echo "\n\nSTARTING DOCKER CONTAINERS…"
-eval $dockerComposeCommand
+echo "\n\nSTARTING COMPONENTS…"
+
+ENABLED_COMPONENTS=$(find /ComponentConfigs -maxdepth 1 -name '*.hcconfig' -exec basename {} .hcconfig \;)
+for ENABLED_COMPONENT in $ENABLED_COMPONENTS
+do
+    (set +e && . "$SCRIPT_PATH/../Components/$ENABLED_COMPONENT/start.sh")
+done
 
 echo "\n\nSUCCESSFULLY STARTED!"

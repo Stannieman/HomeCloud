@@ -2,4 +2,4 @@
 
 mkdir /run/nginx
 
-nginx
+service nginx start
