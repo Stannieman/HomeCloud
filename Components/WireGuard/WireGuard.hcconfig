@@ -1,4 +1,7 @@
 #! /bin/sh
 
-echo "$WIREGUARD_CONFIG" > /vpn.conf
-wg-quick up /vpn.conf
+WIREGUARD_CONFIG="CONTENTS
+OF
+WIREGUARD
+CONFIG
+FILE"
