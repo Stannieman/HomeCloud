@@ -9,4 +9,6 @@ do
   sleep 1
 done
 
+sleep 1
+
 zerotier-cli join "$ZEROTIER_NETWORK_ID"
