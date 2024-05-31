@@ -11,8 +11,8 @@ For convenience you can use the backup script for this.
 Run with `-ns` to skip scrubbing the *ZFS* pool.
 
 ## Update packages and reboot
-Stop all components:  
-`sudo docker stop $(sudo docker ps -q)`
+Stop all components by running their stop script:  
+`sudo ./HomeCloud/Components/Component/stop.sh`
 
 Update all packages:  
 `sudo apt update &&`  
