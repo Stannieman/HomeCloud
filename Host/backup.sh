@@ -48,13 +48,17 @@ CheckZfsScrubResult() {
 
 Arguments=$@
 
-CheckZfsSnapshots
-if [ $Error ]
+CheckArgument -ns
+if [ $HasArgument -eq 0 ]
 then
-	echo "\n\nERROR: ZFS SNAPSHOTS ARE NOT OK!"
-	exit
+	CheckZfsSnapshots
+	if [ $Error ]
+	then
+		echo "\n\nERROR: ZFS SNAPSHOTS ARE NOT OK!"
+		exit
+	fi
+	echo "\n\nZFS SNAPSHOTS ARE OK!"
 fi
-echo "\n\nZFS SNAPSHOTS ARE OK!"
 
 echo "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
 cryptsetup --type luks2 --allow-discards open /dev/sdb encryptedsdb
