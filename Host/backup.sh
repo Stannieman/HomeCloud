@@ -36,6 +36,17 @@ CheckZfsResilverResult() {
 	fi
 }
 
+WaitForZfsScrub() {
+	echo "\n\nWAITING FOR SCRUB TO FINISH…"
+	local status="$(zpool status storage)"
+	while [ $(echo "$status" | grep -c "scan: scrub in progress since ") != 0 ]
+	do
+		echo "WAITING FOR SCRUB TO FINISH…"
+		sleep 10
+		status="$(zpool status storage)"
+	done
+}
+
 CheckZfsScrubResult() {
 	#Wait because zpool status does not show correct status immediately after scrub is done.
 	sleep 5
@@ -44,6 +55,17 @@ CheckZfsScrubResult() {
 	then
 		Error=1
 	fi
+}
+
+WaitForTrim() {
+	echo "\n\nWAITING FOR TRIM TO FINISH…"
+	local status="$(zpool status storage)"
+	while [ $(echo "$status" | grep -c "(trimming)") != 0 ]
+	do
+		echo "WAITING FOR TRIM TO FINISH…"
+		sleep 10
+		status="$(zpool status storage)"
+	done
 }
 
 Arguments=$@
@@ -82,17 +104,28 @@ then
 	zpool offline storage encryptedsdb
 
 	echo "\n\nTRIMMING DRIVES…"
-	zpool trim -w storage encryptedsda
+	zpool trim storage encryptedsda
+	WaitForTrim
 
 	echo "\n\nATTACHING BACKUP DRIVE TO ZFS POOL…"
 	zpool online storage encryptedsdb
+
+	WaitForZfsResilver
+	CheckZfsResilverResult
+	if [ $Error ]
+	then
+		echo "\n\nERROR: ZFS RESILVER DID NOT COMPLETE WITHOUT ERRORS!"
+		exit
+	fi
+	echo "\n\nZFS RESILVER WAS OK!"
 fi
 
 CheckArgument -s
 if [ $HasArgument -eq 1 ]
 then
 	echo "\n\nSCRUBBING ZFS POOL…"
-	zpool scrub -w storage
+	zpool scrub storage
+	WaitForZfsScrub
 	CheckZfsScrubResult
 	if [ $Error ]
 	then
