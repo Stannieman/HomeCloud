@@ -83,12 +83,14 @@ Change the hostname and add it to the hosts file.
 `echo 'server' | sudo tee /etc/hostname &&`  
 `echo '127.0.0.1 server' | sudo tee -a /etc/hosts`
 
+In */etc/fancontrol*, change `MINTEMP` to `65`, `MAXTEMP` to `70` and `MINSTOP` to `5`. Also add `MINPWM` and set it to `5`.
+
 ## Check out this repository
 `git clone https://www.github.com/Stannieman/HomeCloud`
 
 ## Make the scripts executable.
 `chmod +x HomeCloud/Host/start.sh &&`  
-`chmod +x HomeCloud/Host/createStorageSnapshot.sh &&`  
+`chmod +x HomeCloud/Host/createStorageSnapshot.sh &`  
 `chmod +x HomeCloud/Host/checkHealth.sh &&`  
 `chmod +x HomeCloud/Host/backup.sh &&`  
 `chmod +x HomeCloud/Host/updatePreReboot.sh &&`  
