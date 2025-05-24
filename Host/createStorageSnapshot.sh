@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 set -e
 
 currentDay=$(date +'%A' | tr '[:upper:]' '[:lower:]')

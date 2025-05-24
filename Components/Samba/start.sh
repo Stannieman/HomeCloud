@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 HOME_DIR=`getent passwd "$(logname)" | cut -d: -f6`
 . /ComponentConfigs/Samba.hcconfig

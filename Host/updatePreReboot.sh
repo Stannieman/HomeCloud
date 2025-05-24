@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 set -e
 
 SCRIPT_PATH=`dirname $(realpath $0)`
