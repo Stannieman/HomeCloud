@@ -12,7 +12,7 @@ Clone the this repository:
 `git clone --depth 1 https://github.com/Stannieman/HomeCloud`
 
 Clone the *Armbian build* repository:  
-`git clone --depth 1 --branch v25.05 https://github.com/armbian/build`  
+`git clone --depth 1 --branch v25.8.1 https://github.com/armbian/build`  
 The *--branch* parameter should be set to the branch of the desired *Armbian* version.
 
 Add the image customization files to the build framework:  
@@ -20,7 +20,7 @@ Add the image customization files to the build framework:
 
 Build the image:  
 `docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&`  
-`./build/compile.sh homecloud REVISION=25.5.1 RELEASE=plucky`  
+`./build/compile.sh homecloud REVISION=25.8.1 RELEASE=plucky`  
 The *REVISION* parameter should be set to the desired *Armbian* version.  
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
