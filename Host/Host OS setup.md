@@ -4,12 +4,12 @@
 Open a Linux terminal, this can be done using WSL2.
 
 Clone the *Armbian build* repository:\
-`git clone --depth 1 https://github.com/armbian/build `
+`git clone --depth 1 --branch BRANCH https://github.com/armbian/build `\
+Replace *BRANCH* with the branch of the latest Armbian release.
 
 Build the image:\
-`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=current LIB_TAG=v22.11 RELEASE=kinetic BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no BUILD_ONLY=u-boot,kernel,armbian-firmware,armbian-bsp`\
+`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=current RELEASE=kinetic BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no`\
 The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.\
-The *LIB_TAG* parameter should be set to the desired Armbian version.\
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
 After the build finishes the image will be in `./build/output/images`.
@@ -47,9 +47,13 @@ Update all existing packages:\
 `sudo apt update`\
 `sudo apt upgrade -y`
 
+Reboot:\
+`reboot`
+
 Add packages:\
-`sudo apt install -y hdparm zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`
-This will take a long time because it has to compile the *ZFS* kernel module from source.
+`sudo apt install -y hdparm zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`\
+This will take a long time because it has to compile the *ZFS* kernel module from source.\
+It needs to happen after the reboot because the kernel could have been updated.
 
 Remove stale packages:\
 `sudo apt autoremove -y`
