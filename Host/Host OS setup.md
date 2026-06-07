@@ -8,28 +8,37 @@ Extract the *.img* image.
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
-Enter the root password (see *KeePass*).
+Connect a display is not needed.\
+We can SSH into it using the root account and then run the setup script manualy.
+
+Login as *root* with password *1234*.
+
+Enter the new *root* password (see *KeePass*).
 
 Select *Bash* as default shell.
 
 Choose *mainuser* as username for the "normal" user, enter it's password (see *KeePass*) and clear the real name.
 
+Do not set the language based on your location.
+
 You are now still logged in as root, you should log out and switch to the *mainuser* account:\
 `logout`
 
-Now log in with *mainuser*.
+Now log in with *mainuser*.\
+You can use SSH from now on.
 
 Remove unused packages:\
-`sudo apt remove fake-hwclock bsdmainutils cracklib-runtime`
+`sudo apt remove -y fake-hwclock bsdmainutils cracklib-runtime`
 
 Update all existing packages:\
-`sudo apt update && sudo apt upgrade`
+`sudo apt update && sudo apt upgrade -y`
 
 Add packages:\
-`sudo apt install linux-headers-current-meson64 zfs-dkms zfsutils-linux docker.io docker-compose`
+`sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux docker.io docker-compose`µ
+This will take a long time because it has to compile the *ZFS* kernel module from source.
 
 Remove stale packages:\
-`sudo apt autoremove`
+`sudo apt autoremove -y`
 
 Remove unused scheduled tasks:\
 `sudo rm /etc/cron.hourly/fake-hwclock` (Saving time to disk.)\
@@ -52,6 +61,23 @@ Use
 * `0  6    * * 0` for the weekly job.
 * `0  5    1 * *` for the monthly job.
 
+Change the hostname:\
+`echo 'server' | sudo tee /etc/hostname`
+
+## Check out this repository
+`git clone https://www.github.com/Stannieman/HomeCloud`
+
+## Setting up Docker
+The *Docker* containers for components that require network access connect to a network called *nat*. This network must be created:\
+`sudo docker network create nat`
+
+Also create the */docker* directory and add the dummy *docker-compose.yml* file to it:\
+`sudo mkdir /docker`\
+`sudo cp HomeCloud/Host/docker-compose.yml /docker/`
+
+## Make the start script executable.
+`chmod +x HomeCloud/Host/start.sh`
+
 ## Configuring the storage drives
 To make all storage drives go to sleep after a period of inactivity,\
 add a task for each drive that set the drive's power management properties at startup.\
@@ -66,11 +92,17 @@ Add 2 lines to the */etc/crontab* file to automatically make a snapshot every We
 `0  4    * * 0 root zfs destroy -r storage@sunday;zfs snapshot -r storage@sunday`\
 `0  4    * * 3 root zfs destroy -r storage@wednesday;zfs snapshot -r storage@wednesday`
 
-## Setting up Docker
-The *Docker* containers for components that require network access connect to a network called *nat*. This network must be created:\
-`sudo docker network create nat`
+## Reboot
+The original setup script is still waiting in the console session that's on the display that we did not connect\
+and the kernal could have been updated.\
+Reboot:\
+`reboot`
 
-Also create the */docker* directory and add the dummy *docker-compose.yml* file to it.
+After that log back in again.
 
-## Add the start containers script.
-Put the *start<area>.sh* script in the home directory of *mainuser*.
+## Set up the storage
+Set up the storage using the instructions in [ZFS management.md](<./ZFS management.md>).\
+If a storage pool already exists you can just import it and start using that one.
+
+## Set up the components
+Set up all required components using the instructions in [../Components.md](<../Components.md>).
