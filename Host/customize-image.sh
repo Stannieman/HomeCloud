@@ -18,17 +18,17 @@ sed -i '/^MINPWM=.*$/d' /etc/fancontrol
 sed -i '/^MAXPWM=.*$/d' /etc/fancontrol
 printf "\nMINTEMP=hwmon2/pwm1=65" >> /etc/fancontrol
 printf "\nMAXTEMP=hwmon2/pwm1=70" >> /etc/fancontrol
-printf "\nMINSTART=hwmon2/pwm1=150" >> /etc/fancontrol
-printf "\nMINSTOP=hwmon2/pwm1=1" >> /etc/fancontrol
-printf "\nMINPWM=hwmon2/pwm1=1" >> /etc/fancontrol
+printf "\nMINSTART=hwmon2/pwm1=10" >> /etc/fancontrol
+printf "\nMINSTOP=hwmon2/pwm1=5" >> /etc/fancontrol
+printf "\nMINPWM=hwmon2/pwm1=0" >> /etc/fancontrol
 printf "\nMAXPWM=hwmon2/pwm1=180\n" >> /etc/fancontrol
 sed -i '/^$/d' /etc/fancontrol
 
 # Add and remove packages.
 # This will take a long time because it has to compile the *ZFS* kernel module from source.
 apt update
-apt remove -y alsa-utils debsums dosfstools fake-hwclock kbd libcaca0 man-db nano wireguard-tools wpasupplicant
-apt install -y hdparm zfsutils-linux cryptsetup vim git
+apt remove -y alsa-utils btrfs-progs debsums dosfstools fake-hwclock kbd libcaca0 man-db nano rsync wget wireguard-tools wireless-regdb wpasupplicant
+apt install -y cryptsetup git hdparm vim zfsutils-linux
 apt autoremove -y
 apt clean
 
