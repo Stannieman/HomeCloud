@@ -33,7 +33,7 @@ Do not set the language based on your location.
 Choose to not generate locales.
 
 You are now still logged in as root, you should log out and switch to the *mainuser* account:  
-`logout`
+`exit`
 
 Now log in with *mainuser*.
 
@@ -41,7 +41,7 @@ Change the timezone to UTC:
 `sudo timedatectl set-timezone UTC`
 
 Remove unused packages:  
-`sudo apt remove -y alsa-utils dosfstools fake-hwclock libcaca0 nano vlan wireguard-tools wireless-tools wpasupplicant`
+`sudo apt remove -y alsa-utils dosfstools fake-hwclock libcaca0 nano wireguard-tools wireless-tools wpasupplicant`
 
 Update all existing packages:  
 `sudo apt update &&`  
@@ -62,7 +62,6 @@ Remove unused scheduled tasks:
 `sudo rm /etc/cron.hourly/fake-hwclock` (Saving time to disk.)  
 `sudo rm /etc/cron.daily/apt-compat` (Automatic package updates.)  
 `sudo rm /etc/cron.daily/dpkg` (Backup dpkg database.)  
-`sudo rm /etc/cron.daily/sysstat` (Generates process statistics.)  
 `sudo rm /etc/cron.daily/debsums` (Verifies integrity of installed packages.)  
 `sudo rm /etc/cron.daily/man-db` (Updates man database.)  
 `sudo rm /etc/cron.weekly/armbian-quotes` (Refreshes message of the day on SSH login prompt.)  
@@ -70,7 +69,6 @@ Remove unused scheduled tasks:
 `sudo rm /etc/cron.weekly/man-db` (Updates man database.)  
 `sudo rm /etc/cron.monthly/debsums` (Verifies integrity of installed packages.)  
 `sudo rm /etc/cron.d/zfsutils-linux` (Trims and scrubs ZFS, we do this ourself.)  
-`sudo rm /etc/cron.d/sysstat` (Logs system statistics.)  
 `sudo rm /etc/cron.d/armbian-updates` (Automatic package updates.)  
 `sudo rm /etc/cron.d/armbian-check-battery` (Shuts down when battery is low.)
 
