@@ -1,9 +1,9 @@
 GetExpectedSnapshotPattern() {
-	if [ "$(date +'%d' -d $1)" = "$(date +'%d' -d today)" ]
+	if [ "$(date +'%e' -d $1)" = "$(date +'%e' -d today)" ]
 	then
-		date +"storage@$1 *%a %b %d" -d "$1"
+		date +"storage@$1 *%a %b %e" -d "$1"
 	else
-		date +"storage@$1 *%a %b %d" -d "last $1"
+		date +"storage@$1 *%a %b %e" -d "last $1"
 	fi
 }
 
