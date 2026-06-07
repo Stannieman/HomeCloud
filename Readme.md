@@ -34,7 +34,7 @@ Why *LUKS*?
 * It is faster than *ZFS* encryption.\
 While *ZFS* supports encryption natively it does not use the crypto extensions present in our CPU. This causes the encryption to be so slow that the CPU becomes a bottleneck.\
 *LUKS* does make use of these crypto extensions.
-* It is more secore than *ZFS* encryption.\
+* It is more secure than *ZFS* encryption.\
 *ZFS* encrypts the data blocks but bot the metadata.\
 With *LUKS* the entire partition is encrypted.
 
