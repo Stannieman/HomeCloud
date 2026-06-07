@@ -10,7 +10,7 @@ WriteStatusFileAndExit() {
 }
 
 CheckZfsSnapshots
-if [ $ERROR ]
+if [ $Error ]
 then
 	WriteStatusFileAndExit ERROR
 fi

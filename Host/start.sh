@@ -11,11 +11,13 @@ done
 
 dockerComposeCommand="${dockerComposeCommand} up -d"
 
-echo Opening encrypted drive…
+echo -e "OPENING ENCRYPTED DRIVE…"
 cryptsetup --type luks2 open /dev/sda encryptedsda
 
-echo Importing ZFS pool…
+echo -e "\n\nIMPORTING ZFS POOL…"
 zpool import storage
 
-echo Starting Docker containers…
+echo -e "\n\nSTARTING DOCKER CONTAINERS…"
 eval $dockerComposeCommand
+
+echo -e "\n\nSUCESSFULLY STARTED!"

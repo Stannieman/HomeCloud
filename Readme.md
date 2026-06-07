@@ -42,6 +42,8 @@ Instead we use *LUKS* to encrypt
 
 ## Maintenance
 Twice a week a *ZFS* snapshot will be made automatically.\
+These snapshots will periodically be checked and file starting with *OK* or *ERROR* will be written to the root of the storage indicating success or failure.
+
 Other maintenance like syncing the backup storage drive, scrubbing the storage, updating packages, … should be done manually every Sunday.\
 Detailed instructions for this can be find in [Host/Weekly maintenance.md](<Host/Weekly maintenance.md>).
 

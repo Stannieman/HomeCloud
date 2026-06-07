@@ -18,7 +18,7 @@ CheckZfsResilverResult() {
 	local status="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: resilvered .* in .* with 0 errors on ") = 0 ]
 	then
-		ERROR=1
+		Error=1
 	fi
 }
 
@@ -36,50 +36,50 @@ CheckZfsScrubResult() {
 	local status="$(zpool status storage)"
 	if [ $(echo "$status" | grep -c "scan: scrub repaird 0B in .* with 0 errors on ") == 0 ]
 	then
-		ERROR=1
+		Error=1
 	fi
 }
 
 CheckZfsSnapshots
-if [ $ERROR ]
+if [ $Error ]
 then
-	echo Error: ZFS snapshots are not OK!
+	echo -e "\n\nERROR: ZFS SNAPSHOTS ARE NOT OK!"
 	exit
 fi
-echo ZFS snapshots are OK!
+echo -e "\n\nZFS SNAPSHOTS ARE OK!"
 
-echo Opening encrypted backup drive…
+echo -e "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
 cryptsetup --type luks2 open /dev/sdb encryptedsdb
 
-echo Attaching backup drive to ZFS pool…
+echo -e "\n\nATTACHING BACKUP DRIVE TO ZFS POOL…"
 zpool online storage encryptedsdb
 
 WaitForZfsResilver
 CheckZfsResilverResult
-if [ $ERROR ]
+if [ $Error ]
 then
-	echo Error: ZFS resilver did not complete without errors!
+	echo -e "\n\nERROR: ZFS RESILVER DID NOT COMPLETE WITHOUT ERRORS!"
 	exit
 fi
-echo ZFS resilver was OK!
+echo -e "\n\nZFS RESILVER WAS OK!"
 
-if [ "$@" != "-ns" ]
+if [ "$1" != "-ns" ]
 then
 	zpool scrub storage
 	WaitForZfsScrub
 	CheckZfsScrubResult
-	if [ $ERROR ]
+	if [ $Error ]
 	then
-		echo Error: ZFS scrub did not complete without errors!
+		echo -e "\n\nERROR: ZFS SCRUB DID NOT COMPLETE WITHOUT ERRORS!"
 		exit
 	fi
-	echo ZFS scrub was OK!
+	echo -e "\n\nZFS SCRUB WAS OK!"
 fi
 
-echo Detaching backup drive from ZFS pool…
+echo -e "\n\nDETACHING BACKUP DRIVE FROM ZFS POOL…"
 zpool offline storage encryptedsdb
 
-echo Closing encrypted backup drive…
+echo -e "\n\nCLOSING ENCRYPTED BACKUP DRIVE…"
 cryptsetup close encryptedsdb
 
-echo Backup successfully completed!
+echo -e "\n\nBACKUP SUCCESSFULLY COMPLETED!"
