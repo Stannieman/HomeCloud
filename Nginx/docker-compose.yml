@@ -1,0 +1,16 @@
+version: '2.4'
+services:
+    networkShare:
+        container_name: web-server
+        hostname:  web-server
+        image: web-server
+        restart: on-failure
+        volumes:
+            - /storage/webServerRoot:/webServerRoot
+        ports:
+            - "9876:80"
+        networks:
+            - nat
+networks:
+    nat:
+        external: true
