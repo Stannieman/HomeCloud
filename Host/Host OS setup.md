@@ -75,7 +75,7 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 To make all storage drives go to sleep after a period of inactivity,\
 add a task for each drive that sets the drive's power management properties at startup.\
 Add this line to the */etc/crontab* file for each drive:\
-`@reboot root hdparm -S 120 -B 254 /dev/sda`\
+`echo '@reboot root hdparm -S 120 -B 254 /dev/sda' | sudo tee -a /etc/crontab`\
 120 means we let the drive spin down when it's been idle for 10 minutes,\
 254 is the *APM* mode which is drive specific.\
 */dev/sda* needs to be replaced with the actual drive's path.
