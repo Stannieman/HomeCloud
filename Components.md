@@ -1,31 +1,25 @@
 # Components
-For each component there is a directory that contains the *Dockerfile* and all scripts  
-and other files required to build and run the component.
+For each component there is a directory that contains a few scripts and required config files.
 
-## Building the components
-Each component has a *build<area>.sh* script that should be used to build the *Docker* image:  
-`cd HomeCloud/Component`  
-`chmod +x build.sh`  
-`sudo ./build.sh`  
-For simplicity the images are not published to a registry and there is no versioning.
+## Installing and configuring a component
+A component is installed by running its install script:  
+`sudo ./HomeCloud/Component/install.sh`  
+It will install all required packages and copy a template config file called *Component.hcconfig* to the */ComponentConfigs* directory.
 
-To get an image on the host OS just checkout this *Git* repository there and build the required components from scratch.  
-Updating a component is done in the same way.
+After the installation is completed you can make changes to the config file.
 
-## Running the components
-Create a directory for the component in */docker*:  
-`sudo mkdir /docker/Component`
+## Removing a component
+A component can be disabled by simply removing the installed config file or changing its file extension.
 
-Place the *docker-compose.yml* file in it:  
-`sudo cp HomeCloud/Component/docker-compose.yml /docker/Component`
+## Updating a component
+All component packages are updated using apt.  
+This will happen during weekly maintenance ([Host/Weekly maintenance.md](<./Host/Weekly maintenance.md>)).
 
-Change any environment variables like passwords in this file if needed:
-`sudo vim /docker/Component/docker-compose.yml`
+## Running a component
+To run a single component run its start script:  
+`sudo ./HomeCloud/Component/start.sh`
 
-Next stop all running containers:  
-`sudo docker stop $(sudo docker ps -q)`
+Stopping it can be done with its stop script:  
+`sudo ./HomeCloud/Component/stop.sh`
 
-Finally start all components again usign the *start<area>.sh* script:  
-`sudo HomeCloud/Host/start.sh`  
-This will recursively find all *docker-compose.yml* files in */docker* and start them.  
-Enter the storage password when asked.
+The main start script will start all installed components automatically.

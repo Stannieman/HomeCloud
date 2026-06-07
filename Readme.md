@@ -5,11 +5,11 @@ The current setup uses *Hardkernel*'s *ODROID-HC4* running the Ubuntu flavor of 
 A fixed IP is assigned through DHCP and the cloud is always accessible through that.
 
 ## Components
-Apart from managing the storage all other functions of the cloud are handled by separate *Docker* containers, each responsible for a single task.  
+Apart from managing the storage all other functions of the cloud are handled by separate *Components*.  
 Check out [Components.md](<./Components.md>) for instructions about adding and maintaining components.
 
 ## Storage
-The storage is always available and mounted to */storage* on the host. This mountpoint is then made available to all *Docker* containers that need it through a mounted volume.
+The storage is always available and mounted to */storage* on the host. This mountpoint is then made available for all other components that need it.
 
 ### File system
 *ZFS* is used as the file system for the main data storage.  
@@ -37,8 +37,6 @@ While *ZFS* supports encryption natively it does not use the crypto extensions p
 * It is more secure than *ZFS* encryption.  
 *ZFS* encrypts the data blocks but bot the metadata.  
 With *LUKS* the entire partition is encrypted.
-
-Instead we use *LUKS* to encrypt
 
 ## Maintenance
 Twice a week a *ZFS* snapshot will be made automatically.  

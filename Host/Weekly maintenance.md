@@ -29,9 +29,6 @@ For convenience you can use the update scripts for this.
 `sudo HomeCloud/Host/updatePreReboot.sh`  
 `sudo HomeCloud/Host/updatePostReboot.sh`
 
-Reboot:  
-`reboot`
-
 Mount the storage and start the components:  
 `sudo HomeCloud/Host/start.sh`  
 Enter the storage password when asked.
