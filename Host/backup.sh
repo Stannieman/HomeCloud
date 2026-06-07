@@ -7,7 +7,7 @@ scriptPath=`dirname $(realpath $0)`
 WaitForZfsResilver() {
 	echo "\n\nWAITING FOR RESILVER TO FINISH…"
 	local status="$(zpool status storage)"
-	while [ $(echo "$status" | grep -c "scrub: resilver in progress for ") != 0 ]
+	while [ $(echo "$status" | grep -c "scan: resilver in progress since ") != 0 ]
 	do
 		echo "WAITING FOR RESILVER TO FINISH…"
 		sleep 10
