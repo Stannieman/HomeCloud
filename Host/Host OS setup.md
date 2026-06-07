@@ -68,8 +68,10 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 `sudo mkdir /docker`\
 `sudo cp HomeCloud/Host/docker-compose.yml /docker/`
 
-## Make the start script executable.
+## Make the scripts executable.
 `chmod +x HomeCloud/Host/start.sh`
+`chmod +x HomeCloud/Host/checkHealth.sh`
+`chmod +x HomeCloud/Host/backup.sh`
 
 ## Configuring the storage drives
 To make all storage drives go to sleep after a period of inactivity,\
@@ -82,8 +84,8 @@ Add this line to the */etc/crontab* file for each drive:\
 
 ## Configuring bi-weekly ZFS snapshots
 Add 2 lines to the */etc/crontab* file to automatically make a snapshot every Wednesday and Sunday morning.\
-`echo '0  4    * * 0 root zfs destroy -r storage@sunday && zfs snapshot -r storage@sunday' | sudo tee -a /etc/crontab`\
-`echo '0  4    * * 3 root zfs destroy -r storage@wednesday && zfs snapshot -r storage@wednesday' | sudo tee -a /etc/crontab`
+`echo '0  4    * * 0 root /home/mainuser/HomeCloud/Host/createStorageSnapshot.sh' | sudo tee -a /etc/crontab`\
+`echo '0  4    * * 3 root /home/mainuser/HomeCloud/Host/createStorageSnapshot.sh' | sudo tee -a /etc/crontab`
 
 ## Reboot
 The original setup script is still waiting in the console session that's on the display that we did not connect\
@@ -96,6 +98,10 @@ After that log back in again.
 ## Set up the storage
 Set up the storage using the instructions in [ZFS management.md](<./ZFS management.md>).\
 If a storage pool already exists you can just import it and start using that one.
+
+## Add the health check
+Add 1 line to the */etc/crontab* file to automatically do a health check every week.
+`echo '0  5    * * 0 root /home/mainuser/HomeCloud/Host/checkHealth.sh' | sudo tee -a /etc/crontab`
 
 ## Set up the components
 Set up all required components using the instructions in [../Components.md](<../Components.md>).
