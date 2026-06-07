@@ -14,7 +14,5 @@ apt update
 echo "\n\nUPDATING PACKAGES…"
 apt upgrade -y
 
-echo "\n\nREINSTALLING ZFS KERNEL MODULE…"
-apt reinstall zfs-dkms -y
-
-echo "\n\nUPDATE COMPLETED, PLEASE REBOOT!"
+echo "\n\nREBOOTING…"
+reboot

@@ -94,7 +94,8 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 `chmod +x HomeCloud/Host/createStorageSnapshot.sh &&`\
 `chmod +x HomeCloud/Host/checkHealth.sh &&`\
 `chmod +x HomeCloud/Host/backup.sh &&`\
-`chmod +x HomeCloud/Host/update.sh`
+`chmod +x HomeCloud/Host/updatePreReboot.sh`\
+`chmod +x HomeCloud/Host/updatePostReboot.sh`
 
 ## Configuring the storage drives
 To make all storage drives go to sleep after a period of inactivity,\
