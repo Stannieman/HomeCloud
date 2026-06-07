@@ -79,7 +79,7 @@ fi
 echo "\n\nZFS SNAPSHOTS ARE OK!"
 
 CheckArgument -t
-if [ $HasArgument ]
+if [ $HasArgument -eq 1 ]
 then
 	echo "\n\nTRIMMING DRIVES…"
 	zpool trim storage encryptedsda
@@ -102,7 +102,7 @@ fi
 echo "\n\nZFS RESILVER WAS OK!"
 
 CheckArgument -s
-if [ $HasArgument ]
+if [ $HasArgument -eq 1 ]
 then
 	echo "\n\nSCRUBBING ZFS POOL…"
 	zpool scrub storage
