@@ -10,5 +10,5 @@ done
 
 DOCKER_COMPOSE_COMMAND="${DOCKER_COMPOSE_COMMAND} up -d"
 
-zfs mount -l storage/encrypted\
-&& eval $DOCKER_COMPOSE_COMMAND
+zfs mount -l storage/encrypted
+eval $DOCKER_COMPOSE_COMMAND
