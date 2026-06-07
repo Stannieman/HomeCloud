@@ -19,8 +19,8 @@ sed -i '/^MAXPWM=.*$/d' /etc/fancontrol
 printf "\nMINTEMP=hwmon2/pwm1=65" >> /etc/fancontrol
 printf "\nMAXTEMP=hwmon2/pwm1=70" >> /etc/fancontrol
 printf "\nMINSTART=hwmon2/pwm1=150" >> /etc/fancontrol
-printf "\nMINSTOP=hwmon2/pwm1=5" >> /etc/fancontrol
-printf "\nMINPWM=hwmon2/pwm1=5" >> /etc/fancontrol
+printf "\nMINSTOP=hwmon2/pwm1=1" >> /etc/fancontrol
+printf "\nMINPWM=hwmon2/pwm1=1" >> /etc/fancontrol
 printf "\nMAXPWM=hwmon2/pwm1=180\n" >> /etc/fancontrol
 sed -i '/^$/d' /etc/fancontrol
 
