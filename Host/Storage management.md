@@ -79,7 +79,7 @@ Now the drive can be unplugged to store it in a safe location.
 First attach the backup drive to the computer.
 
 Now open the LUKS partition and bring the drive online.\
-`sudo cryptsetup --type2 open /dev/sdb encryptedsdb && sudo zpool online storage encryptedsdb`
+`sudo cryptsetup --type luks2 open /dev/sdb encryptedsdb && sudo zpool online storage encryptedsdb`
 
 Now the backup drive should resilver.
 Resilvering happens in the background so we need to manually check\
@@ -91,7 +91,10 @@ After the resilvering finished the pool should be scrubbed.\
 Then check if the pool is healty.\
 `sudo zpool status storage`
 
-Finally bring the backup drive back offline and close the LUKS partition.\
+Bring the backup drive back offline and close the LUKS partition.\
 `sudo zpool offline storage encryptedsdb && sudo cryptsetup close encryptedsdb`
+
+Finally power off the drive.\
+`echo 1 | sudo tee /sys/block/sdb/device/delete`
 
 The backup drive can now be detached from the computer.

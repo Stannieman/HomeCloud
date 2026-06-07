@@ -88,4 +88,7 @@ zpool offline storage encryptedsdb
 echo "\n\nCLOSING ENCRYPTED BACKUP DRIVE…"
 cryptsetup close encryptedsdb
 
+echo "\n\nPOWERING OFF DRIVE…"
+echo 1 | tee /sys/block/sdb/device/delete
+
 echo "\n\nBACKUP SUCCESSFULLY COMPLETED!"
