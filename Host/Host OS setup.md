@@ -8,7 +8,7 @@ Clone the *Armbian build* repository:
 Replace *BRANCH* with the branch of the latest Armbian release.
 
 Build the image:  
-`sudo ./build/compile.sh docker BOARD=odroidhc4 BRANCH=current RELEASE=lunar BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no`  
+`./build/compile.sh BOARD=odroidhc4 BRANCH=current RELEASE=noble BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no KERNEL_GIT=shallow`  
 The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.  
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
@@ -17,7 +17,7 @@ After the build finishes the image will be in `./build/output/images`.
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
-**These instructions apply to *Ubuntu Lunar* with the *current* kernel and may need to be updated when using different versions!**
+**These instructions apply to *Ubuntu Noble* with the *current* kernel and may need to be updated when using different versions!**
 
 Connecting a display is not needed.  
 We can SSH into it using the root account and then run the setup script manualy.
@@ -41,14 +41,14 @@ Change the timezone to UTC:
 `sudo timedatectl set-timezone UTC`
 
 Remove unused packages:  
-`sudo apt remove -y alsa-utils dosfstools fake-hwclock wireless-tools wpasupplicant nano`
+`sudo apt remove -y alsa-utils dosfstools fake-hwclock libcaca0 nano vlan wireguard-tools wireless-tools wpasupplicant`
 
 Update all existing packages:  
 `sudo apt update &&`  
 `sudo apt upgrade -y`
 
 Reboot:  
-`reboot`
+`sudo reboot`
 
 Add packages:  
 `sudo apt install -y hdparm zfs-dkms zfsutils-linux cryptsetup vim git`  
