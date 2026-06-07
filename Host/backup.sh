@@ -46,6 +46,17 @@ CheckZfsScrubResult() {
 	fi
 }
 
+WaitForTrim() {
+	echo "\n\nWAITING FOR TRIM TO FINISH…"
+	local status="$(zpool status storage)"
+	while [ $(echo "$status" | grep -c "(trimming)") != 0 ]
+	do
+		echo "WAITING FOR TRIM TO FINISH…"
+		sleep 10
+		status="$(zpool status storage)"
+	done
+}
+
 CheckZfsSnapshots
 if [ $Error ]
 then
@@ -69,8 +80,13 @@ then
 fi
 echo "\n\nZFS RESILVER WAS OK!"
 
+echo "\n\nTRIMMING DRIVES…"
+zpool trim storage
+WaitForTrim
+
 if [ "$1" != "-ns" ]
 then
+	echo "\n\nSCRUBBING ZFS POOL…"
 	zpool scrub storage
 	WaitForZfsScrub
 	CheckZfsScrubResult
