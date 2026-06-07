@@ -40,7 +40,7 @@ CheckZfsScrubResult() {
 	#Wait because zpool status does not show correct status immediately after scrub is done.
 	sleep 5
 	local status="$(zpool status storage)"
-	if [ $(echo "$status" | grep -c "scan: scrub repaird 0B in .* with 0 errors on ") == 0 ]
+	if [ $(echo "$status" | grep -c "scan: scrub repaird 0B in .* with 0 errors on ") = 0 ]
 	then
 		Error=1
 	fi

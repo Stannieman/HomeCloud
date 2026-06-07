@@ -4,7 +4,7 @@ services:
         container_name: network-share
         hostname:  network-share
         image: network-share
-        restart: on-failure
+        restart: 'no'
         volumes:
             - /storage:/storage
         network_mode: host
