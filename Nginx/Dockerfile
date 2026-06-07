@@ -1,6 +1,6 @@
-FROM alpine:3.14.0
+FROM alpine:3.16.0
 
-RUN apk add nginx=1.20.1-r3 --update-cache;\
+RUN apk add nginx=1.22.0-r0 --update-cache;\
 adduser mainuser -D -u 1000
 
 ADD nginx.conf /etc/nginx/nginx.conf
