@@ -69,8 +69,8 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 `sudo cp HomeCloud/Host/docker-compose.yml /docker/`
 
 ## Make the scripts executable.
-`chmod +x HomeCloud/Host/start.sh`
-`chmod +x HomeCloud/Host/checkHealth.sh`
+`chmod +x HomeCloud/Host/start.sh`\
+`chmod +x HomeCloud/Host/checkHealth.sh`\
 `chmod +x HomeCloud/Host/backup.sh`
 
 ## Configuring the storage drives
@@ -100,7 +100,7 @@ Set up the storage using the instructions in [ZFS management.md](<./ZFS manageme
 If a storage pool already exists you can just import it and start using that one.
 
 ## Add the health check
-Add 1 line to the */etc/crontab* file to automatically do a health check every week.
+Add 1 line to the */etc/crontab* file to automatically do a health check every week.\
 `echo '0  5    * * 0 root /home/mainuser/HomeCloud/Host/checkHealth.sh' | sudo tee -a /etc/crontab`
 
 ## Set up the components
