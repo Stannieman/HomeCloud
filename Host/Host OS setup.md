@@ -4,7 +4,7 @@
 Open a Linux terminal, this can be done using WSL2.
 
 Install the required tools:  
-`sudp apt install docker.io qemu-user-static binfmt-support &&`  
+`sudo apt install docker.io qemu-user-static binfmt-support &&`  
 `sudo usermod -aG docker $USER &&`  
 `sudo systemctl restart systemd-binfmt`
 
@@ -20,7 +20,7 @@ Add the image customization files to the build framework:
 
 Build the image:  
 `docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&`  
-`./build/compile.sh homecloud REVISION=25.8.1 RELEASE=plucky`  
+`./build/compile.sh homecloud REVISION=25.11.1 RELEASE=plucky`  
 The *REVISION* parameter should be set to the desired *Armbian* version.  
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
