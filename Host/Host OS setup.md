@@ -4,12 +4,12 @@
 Open a Linux terminal, this can be done using WSL2.
 
 Clone the *Armbian build* repository:  
-`git clone --depth 1 --branch BRANCH https://github.com/armbian/build`  
-Replace *BRANCH* with the branch of the latest Armbian release.
+`git clone --depth 1 --branch v25.05 https://github.com/armbian/build`
 
 Build the image:  
-`./build/compile.sh BOARD=odroidhc4 BRANCH=current RELEASE=noble BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no KERNEL_GIT=shallow`  
+`./build/compile.sh BOARD=odroidhc4 BRANCH=current REVISION=25.5.1 RELEASE=plucky BETA=no BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no KERNEL_GIT=shallow`  
 The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.  
+The *REVISION* parameter should be set to the desired *Armbian* version.  
 The *RELEASE* parameter should be set to the desired *Ubuntu* version.
 
 After the build finishes the image will be in `./build/output/images`.
@@ -41,7 +41,7 @@ Change the timezone to UTC:
 `sudo timedatectl set-timezone UTC`
 
 Remove unused packages:  
-`sudo apt remove -y alsa-utils armbian-config dosfstools fake-hwclock libcaca0 nano wireguard-tools wpasupplicant`
+`sudo apt remove -y alsa-utils armbian-config debsums dosfstools fake-hwclock iw kdb libcaca0 locales man-db nano wireguard-tools wpasupplicant`
 
 Update all existing packages:  
 `sudo apt update &&`  
@@ -64,7 +64,7 @@ Remove unused scheduled tasks:
 `sudo rm /etc/cron.daily/dpkg` (Backup dpkg database.)  
 `sudo rm /etc/cron.daily/debsums` (Verifies integrity of installed packages.)  
 `sudo rm /etc/cron.daily/man-db` (Updates man database.)  
-`sudo rm /etc/cron.weekly/armbian-quotes` (Refreshes message of the day on SSH login prompt.)  
+`sudo rm /etc/cron.daily/armbian-quotes` (Refreshes message of the day on SSH login prompt.)  
 `sudo rm /etc/cron.weekly/debsums` (Verifies integrity of installed packages.)  
 `sudo rm /etc/cron.weekly/man-db` (Updates man database.)  
 `sudo rm /etc/cron.monthly/debsums` (Verifies integrity of installed packages.)  
@@ -87,14 +87,6 @@ In */etc/fancontrol*, change `MINTEMP` to `65`, `MAXTEMP` to `70` and `MINSTOP` 
 
 ## Check out this repository
 `git clone https://www.github.com/Stannieman/HomeCloud`
-
-## Make the scripts executable.
-`chmod +x HomeCloud/Host/start.sh &&`  
-`chmod +x HomeCloud/Host/createStorageSnapshot.sh &`  
-`chmod +x HomeCloud/Host/checkHealth.sh &&`  
-`chmod +x HomeCloud/Host/backup.sh &&`  
-`chmod +x HomeCloud/Host/updatePreReboot.sh &&`  
-`chmod +x HomeCloud/Host/updatePostReboot.sh`
 
 ## Configuring the storage drives
 To make all storage drives go to sleep after a period of inactivity,  
