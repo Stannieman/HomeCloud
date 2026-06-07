@@ -4,6 +4,17 @@ set -e
 scriptPath=`dirname $(realpath $0)`
 . $scriptPath/helpers.sh
 
+CheckArgument() {
+	HasArgument=0
+	for argument in $Arguments; do
+		if [ $argument = $1 ]
+		then
+			HasArgument=1
+			return
+		fi
+	done
+}
+
 WaitForZfsResilver() {
 	echo "\n\nWAITING FOR RESILVER TO FINISH…"
 	local status="$(zpool status storage)"
@@ -57,6 +68,8 @@ WaitForTrim() {
 	done
 }
 
+Arguments=$@
+
 CheckZfsSnapshots
 if [ $Error ]
 then
@@ -64,6 +77,14 @@ then
 	exit
 fi
 echo "\n\nZFS SNAPSHOTS ARE OK!"
+
+CheckArgument -t
+if [ $HasArgument ]
+then
+	echo "\n\nTRIMMING DRIVES…"
+	zpool trim storage
+	WaitForTrim
+fi
 
 echo "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
 cryptsetup --type luks2 --allow-discards open /dev/sdb encryptedsdb
@@ -80,14 +101,8 @@ then
 fi
 echo "\n\nZFS RESILVER WAS OK!"
 
-if [ "$1" != "-nt" ]
-then
-	echo "\n\nTRIMMING DRIVES…"
-	zpool trim storage
-	WaitForTrim
-fi
-
-if [ "$2" != "-ns" ]
+CheckArgument -s
+if [ $HasArgument ]
 then
 	echo "\n\nSCRUBBING ZFS POOL…"
 	zpool scrub storage
