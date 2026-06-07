@@ -12,7 +12,7 @@ Clone the this repository:
 `git clone --depth 1 https://github.com/Stannieman/HomeCloud`
 
 Clone the *Armbian build* repository:  
-`git clone --depth 1 --branch v26.2.1 https://github.com/armbian/build`  
+`git clone --depth 1 --branch v26.5.1 https://github.com/armbian/build`  
 The *--branch* parameter should be set to the branch of the desired *Armbian* version.
 
 Add the image customization files to the build framework:  
@@ -20,16 +20,16 @@ Add the image customization files to the build framework:
 
 Build the image:  
 `docker run --rm --privileged multiarch/qemu-user-static --reset -p yes &&`  
-`./build/compile.sh homecloud REVISION=26.2.1 RELEASE=trixie`  
+`./build/compile.sh homecloud REVISION=26.5.1 RELEASE=trixie`  
 The *REVISION* parameter should be set to the desired *Armbian* version.  
-The *RELEASE* parameter should be set to the desired *Ubuntu* version.
+The *RELEASE* parameter should be set to the desired *Debian* version.
 
 After the build finishes the image will be in `./build/output/images`.
 
 Write the image to the MicroSD card using [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/).
 
 ## Installing the OS
-**These instructions apply to *Ubuntu Plucky* with the *current* kernel and may need to be updated when using different versions!**
+**These instructions apply to *Debian Trixie* with the *current* kernel and may need to be updated when using different versions!**
 
 Connecting a display is not needed.  
 We can SSH into it using the root account and then run the setup script manualy.

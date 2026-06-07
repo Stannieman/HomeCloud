@@ -1,7 +1,7 @@
 # Home cloud
 
 ## Hardware and host OS
-The current setup uses *Hardkernel*'s *ODROID-HC4* running the Ubuntu flavor of [Armbian](https://www.armbian.com/odroid-hc4/).  
+The current setup uses *Hardkernel*'s *ODROID-HC4* running the Debian flavor of [Armbian](https://www.armbian.com/odroid-hc4/).  
 A fixed IP is assigned through DHCP and the cloud is always accessible through that.
 
 ## Components
