@@ -25,7 +25,6 @@ printf "\nMAXPWM=hwmon2/pwm1=180\n" >> /etc/fancontrol
 sed -i '/^$/d' /etc/fancontrol
 
 # Add and remove packages.
-# This will take a long time because it has to compile the *ZFS* kernel module from source.
 apt update
 apt remove -y alsa-utils btrfs-progs debsums dosfstools fake-hwclock kbd libcaca0 man-db nano rsync wget wireguard-tools wireless-regdb wpasupplicant
 apt install -y cryptsetup git hdparm vim zfsutils-linux

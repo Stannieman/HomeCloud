@@ -51,10 +51,13 @@ Now log in with *mainuser*.
 
 Update, remove and add packages:  
 `sudo apt update &&`  
-`sudo apt remove armbian-config &&`  
+`sudo apt remove armbian-config -y &&`  
 `sudo apt upgrade -y &&`  
-`sudo apt install zfs-dkms &&`  
+`sudo apt install zfs-dkms -y &&`  
 `sudo apt autoremove -y`
+
+Install Homebrew:  
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
 Change the scheduled times of the default cron jobs in the */etc/crontab* file.  
 Use
