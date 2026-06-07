@@ -36,17 +36,6 @@ CheckZfsResilverResult() {
 	fi
 }
 
-WaitForZfsScrub() {
-	echo "\n\nWAITING FOR SCRUB TO FINISH…"
-	local status="$(zpool status storage)"
-	while [ $(echo "$status" | grep -c "scan: scrub in progress since ") != 0 ]
-	do
-		echo "WAITING FOR SCRUB TO FINISH…"
-		sleep 10
-		status="$(zpool status storage)"
-	done
-}
-
 CheckZfsScrubResult() {
 	#Wait because zpool status does not show correct status immediately after scrub is done.
 	sleep 5
@@ -55,17 +44,6 @@ CheckZfsScrubResult() {
 	then
 		Error=1
 	fi
-}
-
-WaitForTrim() {
-	echo "\n\nWAITING FOR TRIM TO FINISH…"
-	local status="$(zpool status storage)"
-	while [ $(echo "$status" | grep -c "(trimming)") != 0 ]
-	do
-		echo "WAITING FOR TRIM TO FINISH…"
-		sleep 10
-		status="$(zpool status storage)"
-	done
 }
 
 Arguments=$@
@@ -77,14 +55,6 @@ then
 	exit
 fi
 echo "\n\nZFS SNAPSHOTS ARE OK!"
-
-CheckArgument -t
-if [ $HasArgument -eq 1 ]
-then
-	echo "\n\nTRIMMING DRIVES…"
-	zpool trim storage encryptedsda
-	WaitForTrim
-fi
 
 echo "\n\nOPENING ENCRYPTED BACKUP DRIVE…"
 cryptsetup --type luks2 --allow-discards open /dev/sdb encryptedsdb
@@ -101,12 +71,18 @@ then
 fi
 echo "\n\nZFS RESILVER WAS OK!"
 
+CheckArgument -t
+if [ $HasArgument -eq 1 ]
+then
+	echo "\n\nTRIMMING DRIVES…"
+	zpool trim -w storage encryptedsda
+fi
+
 CheckArgument -s
 if [ $HasArgument -eq 1 ]
 then
 	echo "\n\nSCRUBBING ZFS POOL…"
-	zpool scrub storage
-	WaitForZfsScrub
+	zpool scrub -w storage
 	CheckZfsScrubResult
 	if [ $Error ]
 	then
