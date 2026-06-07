@@ -49,4 +49,4 @@ Detailed instructions for this can be find in [Host/Weekly maintenance.md](<Host
 
 ## Setup
 Instructions for setting up the host OS can be found in [Host/Host OS setup.md](<Host/Host OS setup.md>).\
-Instructions for managing the *ZFS* pool are in [Host/ZFS management.md](<Host/Storage management.md>).
+Instructions for managing the storage are in [Host/Storage management.md](<Host/Storage management.md>).
