@@ -41,7 +41,7 @@ Change the timezone to UTC:
 `sudo timedatectl set-timezone UTC`
 
 Remove unused packages:  
-`sudo apt remove -y alsa-utils dosfstools fake-hwclock libcaca0 nano wireguard-tools wireless-tools wpasupplicant`
+`sudo apt remove -y alsa-utils armbian-config dosfstools fake-hwclock libcaca0 nano wireguard-tools wpasupplicant`
 
 Update all existing packages:  
 `sudo apt update &&`  
