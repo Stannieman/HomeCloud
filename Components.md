@@ -3,7 +3,7 @@ For each component there is a directory that contains a few scripts and required
 
 ## Installing and configuring a component
 A component is installed by running its install script:  
-`sudo ./HomeCloud/Component/install.sh`  
+`sudo ./HomeCloud/Components/Component/install.sh`  
 It will install all required packages and copy a template config file called *Component.hcconfig* to the */ComponentConfigs* directory.
 
 After the installation is completed you can make changes to the config file.
