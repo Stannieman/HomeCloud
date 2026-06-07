@@ -6,6 +6,9 @@ Open a Linux terminal, this can be done using WSL2.
 Clone the *Armbian build* repository:  
 `git clone --depth 1 --branch v25.05 https://github.com/armbian/build`
 
+Prevent the partition from expanding to the full available space:  
+`mkdir -p ./build/userpatches && printf '#!/bin/bash\necho 4294967296B >> /root/.rootfs_resize' >> ./build/userpatches/customize-image.sh && chmod +x ./build/userpatches/customize-image.sh`
+
 Build the image:  
 `./build/compile.sh BOARD=odroidhc4 BRANCH=current REVISION=25.5.1 RELEASE=plucky BETA=no BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=img INSTALL_HEADERS=yes SKIP_BOOTSPLASH=yes EXTRAWIFI=no WIREGUARD=no AUFS=no KERNEL_GIT=shallow`  
 The *BRANCH* parameter can be *current* or *edge* depending on the desired kernel.  
