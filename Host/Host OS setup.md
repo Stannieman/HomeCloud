@@ -72,6 +72,7 @@ Also create the */docker* directory and add the dummy *docker-compose.yml* file 
 
 ## Make the scripts executable.
 `chmod +x HomeCloud/Host/start.sh`\
+`chmod +x HomeCloud/Host/createStorageSnapshot.sh`\
 `chmod +x HomeCloud/Host/checkHealth.sh`\
 `chmod +x HomeCloud/Host/backup.sh`\
 `chmod +x HomeCloud/Host/update.sh`
