@@ -78,8 +78,14 @@ echo "\n\nZFS RESILVER WAS OK!"
 CheckArgument -t
 if [ $HasArgument -eq 1 ]
 then
+	echo "\n\nDETACHING BACKUP DRIVE FROM ZFS POOL…"
+	zpool offline storage encryptedsdb
+
 	echo "\n\nTRIMMING DRIVES…"
 	zpool trim -w storage encryptedsda
+
+	echo "\n\nATTACHING BACKUP DRIVE TO ZFS POOL…"
+	zpool online storage encryptedsdb
 fi
 
 CheckArgument -s
