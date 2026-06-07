@@ -11,13 +11,14 @@ done
 
 dockerComposeCommand="${dockerComposeCommand} up -d"
 
-echo "OPENING ENCRYPTED DRIVE…"
+echo "\n\nOPENING ENCRYPTED DRIVE…"
 cryptsetup --type luks2 open /dev/sda encryptedsda
 
 echo "\n\nIMPORTING ZFS POOL…"
 zpool import storage
 
 echo "\n\nSTARTING DOCKER CONTAINERS…"
+sleep 30
 eval $dockerComposeCommand
 
 echo "\n\nSUCESSFULLY STARTED!"

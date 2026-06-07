@@ -1,7 +1,7 @@
 #! /bin/sh
 set -e
 
-echo "STOPPING DOCKER CONTAINERS IF NEEDED…"
+echo "\n\nSTOPPING DOCKER CONTAINERS IF NEEDED…"
 runningContainers=$(docker ps -q)
 if [ "$runningContainers" != "" ]
 then
