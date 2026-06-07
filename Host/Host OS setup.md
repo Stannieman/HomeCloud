@@ -34,7 +34,7 @@ Update all existing packages:\
 `sudo apt update && sudo apt upgrade -y`
 
 Add packages:\
-`sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim`
+`sudo apt install -y linux-headers-current-meson64 zfs-dkms zfsutils-linux cryptsetup docker.io docker-compose vim git`
 This will take a long time because it has to compile the *ZFS* kernel module from source.
 
 Remove stale packages:\
@@ -64,9 +64,6 @@ Change the hostname and add it to the hosts file:\
 `git clone https://www.github.com/Stannieman/HomeCloud`
 
 ## Setting up Docker
-The *Docker* containers for components that require network access connect to a network called *nat*. This network must be created:\
-`sudo docker network create nat`
-
 Also create the */docker* directory and add the dummy *docker-compose.yml* file to it:\
 `sudo mkdir /docker`\
 `sudo cp HomeCloud/Host/docker-compose.yml /docker/`
@@ -85,12 +82,12 @@ Add this line to the */etc/crontab* file for each drive:\
 
 ## Configuring bi-weekly ZFS snapshots
 Add 2 lines to the */etc/crontab* file to automatically make a snapshot every Wednesday and Sunday morning.\
-`0  4    * * 0 root zfs destroy -r storage@sunday;zfs snapshot -r storage@sunday`\
-`0  4    * * 3 root zfs destroy -r storage@wednesday;zfs snapshot -r storage@wednesday`
+`echo '0  4    * * 0 root zfs destroy -r storage@sunday && zfs snapshot -r storage@sunday' | sudo tee -a /etc/crontab`\
+`echo '0  4    * * 3 root zfs destroy -r storage@wednesday && zfs snapshot -r storage@wednesday' | sudo tee -a /etc/crontab`
 
 ## Reboot
 The original setup script is still waiting in the console session that's on the display that we did not connect\
-and the kernal could have been updated.\
+and the kernel could have been updated.\
 Reboot:\
 `reboot`
 

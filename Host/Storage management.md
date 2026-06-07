@@ -6,7 +6,7 @@ Check the real names of your drives before running any of the commands in these 
 ## Preparing a drive
 Before we use the drive we clear it entirely and initialize it as *GPT*.\
 `sudo fdisk /dev/sda << EOF`\
-`q`\
+`g`\
 `w`\
 `EOF`
 
@@ -21,7 +21,7 @@ Enter the password when it asks for it, it can be found in KeePass.
 
 ## Closing an encrypted partition
 Whenever we are done using an encrypted partition it has to be closed before we can disconnect it from the computer.\
-`sudo cryptsetup close encryptedsda`\
+`sudo cryptsetup close encryptedsda`
 
 ## Creating the ZFS pool
 ZFS keeps a history of all modifications made to the pool. We don't care about this history so we want it to take up the least possible space. The maximum space the history can occupy is fixed when the pool is initially created and is relative to the initial pool size.

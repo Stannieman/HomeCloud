@@ -7,12 +7,6 @@ services:
         restart: on-failure
         volumes:
             - /storage:/storage
-        ports:
-            - "445:445"
-        networks:
-            - nat
+        network_mode: host
         environment:
             - MAIN_USER_PASSWORD=REPLACE_WITH_SMB_USER_PASSWORD
-networks:
-    nat:
-        external: true
