@@ -4,16 +4,7 @@
 First check that the automatic snapshots are still being made:\
 `sudo zfs list -t snapshot -o name,creation`
 
-Then sync the backup drive using the instructions from [ZFS management.md](<./ZFS management.md>).\
-In short:
-
-Attach the drive to the computer.
-
-Run the commands to sync the backup drive:\
-`sudo zpool online /dev/sdb && sudo zpool scrub storage && sudo zpool trim storage && sudo zpool status storage && sudo zpool offline storage /dev/sdb`
-
-Verify that the status command did not report any problems\
-and detach the drive from the computer.
+Then sync the backup drive using the instructions from [ZFS management.md](<./ZFS management.md>).
 
 ## Update packages and reboot
 Stop all components:\
