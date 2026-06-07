@@ -40,7 +40,7 @@ Change the timezone to UTC:\
 `sudo timedatectl set-timezone UTC`
 
 Remove unused packages:\
-`sudo apt remove -y fake-hwclock cracklib-runtime`
+`sudo apt remove -y fake-hwclock cracklib-runtime wireless-regdb wireless-tools wpasupplicant nano armbian-plymouth-theme`
 
 Update all existing packages:\
 `sudo apt update`\
@@ -59,9 +59,11 @@ Remove unused scheduled tasks:\
 `sudo rm /etc/cron.daily/dpkg` (Backup dpkg database.)\
 `sudo rm /etc/cron.daily/sysstat` (Generates process statistics.)\
 `sudo rm /etc/cron.daily/cracklib-runtime` (Maintains a database for password security checking.)\
+`sudo rm /etc/cron.weekly/armbian-quotes` (Refreshes message of the day on SSH login prompt.)\
 `sudo rm /etc/cron.d/zfsutils-linux` (Trims and scrubs ZFS, we do this ourself.)\
 `sudo rm /etc/cron.d/sysstat` (Logs system statistics.)\
-`sudo rm /etc/cron.d/armbian-updates` (Automatic package updates.)
+`sudo rm /etc/cron.d/armbian-updates` (Automatic package updates.)\
+`sudo rm /etc/cron.d/armbian-check-battery` (Shuts down when battery is low.)
 
 Change the scheduled times of the default cron jobs in the */etc/crontab* file.\
 Use
