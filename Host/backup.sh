@@ -82,7 +82,7 @@ CheckArgument -t
 if [ $HasArgument ]
 then
 	echo "\n\nTRIMMING DRIVES…"
-	zpool trim storage
+	zpool trim storage encryptedsda
 	WaitForTrim
 fi
 
